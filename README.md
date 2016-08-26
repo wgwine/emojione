@@ -1,4 +1,4 @@
-#![Emoji One Logo](http://git.emojione.com/assets/logo.png) Emoji One [![Build Status](https://travis-ci.org/Ranks/emojione.svg?branch=master)](https://travis-ci.org/Ranks/emojione)
+#![Emoji One Logo](http://git.emojione.com/assets/logo.png) Emoji One 
 > bringing you [emojione.com](http://emojione.com/) & [emoji.codes](http://emoji.codes/)
 
 The web's first and only complete open source emoji set. It is 100% free and super easy to integrate.
@@ -7,22 +7,25 @@ The web's first and only complete open source emoji set. It is 100% free and sup
 
 ## The Idea
 
-To standardize emoji on the web through the use of common :shortnames:.
+This is a highly minified version of the emojione implementation. It strips out all functionality from emojione except for png sprites. 
 
-When storing user inputted text in your database, say from a guestbook or through a CMS admin, you should always make sure you are storing text containing only :shortnames: and not Unicode emoji characters or emoji images. Then, when you are displaying that content to the user, you can convert it server-side with the PHP toolkit provided, or client-side using the Javascript toolkit which is also provided. Demos of this process using Javascript, jQuery, and PHP are included in the repo, and we have example code snippets below.
+There are 1,832 emojis in the emojione library. Emojione suggests using their individual images (one image per emoji) as the standard implementation. Most websites will require an emoji picker utility to allow their users to take advantage of emojis. A picker using the standard implementation would need to make 1,832 separate image requests in order to display all emojis to the user. Additionally, the standard emojione method relies on an external CDN which hosts the images. This adds risk to applications making use of these images. The images can be hosted locally, but that requires additional configuration, and does not alleviate the need to make 1,832 requests.
 
+The sprite method was chosen for it's simplicity and because it vastly reduces the number of required requests for emoji picker utilities. Once the sprite image is loaded and cached in the browser, all emojis can display immediately without additional loading.  
 
-#### _What are Shortnames?_
+## Additional changes were made to reduce the overall size of the implementation:
 
- Shortnames are semi-standardized human-readable identifiers for each emoji icon. Many online web applications will accept these shortnames as alternatives for the actual unicode character. We've compiled the full list over at [emoji.codes](http://emoji.codes/) with quick copy & search functions.
+*  The standard emojione.min.js file is 217KB in size. 
+  *  The emojione.slim.js file included in this repo is 77KB.
+*  The standard emojione.sprites.png file is 2,205KB. 
+  *  The sprite image in this repo has been compressed to 1,162KB.
+*  Using sprites in the standard emojione requires the addition of a 96KB CSS file, which is not required for this slim implementation.
 
-
+This brings the total size from 2,518KB down to 1,239KB, for a page weight savings of 1,279KB.
 
 
 ## Installation
-
-We've teamed up with [JSDelivr](http://www.jsdelivr.com/#!emojione) to provide a simple way to install these emoji on any javascript-enabled website. Add the following script and stylesheet links to the head of your webpage:
-
+Add the following script and stylesheet links to your webpage:
 ```
 <script src="./path/to/emojione.slim.js"></script>
 <link rel="stylesheet" href="./path/to/emojione.slim.css"/>
